@@ -10,7 +10,7 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://curly-palm-tree-4jrx4wwpr6qxcjqj9-3000.app.github.dev/api", {
+      const response = await axios.post("/api", {
         name,
         password,
       });
