@@ -8,12 +8,14 @@ export async function POST(req: Request) {
 
     const resultinsert = await AddMAny_St.findOne(data);
 
+    if (resultinsert === null) {
+      return Response.json({
+        data: "Pls Enter valid data",
+      });
+    }
 
-    
     return Response.json({
       data: resultinsert,
     });
-
-    
   } catch (error) {}
 }
