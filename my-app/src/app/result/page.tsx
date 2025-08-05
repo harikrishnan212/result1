@@ -46,7 +46,7 @@ function Result() {
         >
           Get Result
         </button>
-        <h1 className="text-red-500 text-center font-semibold"> {data.includes("Pls Enter valid data") ? "Invalid User" : ""}</h1>
+        {/* <h1 className="text-red-500 text-center font-semibold"> {data.includes("Pls Enter valid data") ? "Invalid User" : ""}</h1> */}
       </div>
     </div>
   );

@@ -6,7 +6,32 @@ export async function POST(req: Request) {
     await db();
     const data = await req.json();
 
-    const queryConditions = data.map((student: any) => ({
+
+    if (data.length === 0) {
+      return Response.json({
+        success: false,
+        message: "Please provide at least one student record.",
+      });
+    }
+
+
+    const validStudents = data.filter((student: any) =>
+      student &&
+      typeof student.roll_number === "string" &&
+      student.roll_number.trim() !== "" &&
+      typeof student.stname === "string" &&
+      student.stname.trim() !== ""
+    );
+
+    if (validStudents.length === 0) {
+      return Response.json({
+        success: false,
+        message: "No valid student records found. Please check your data.",
+      });
+    }
+
+    
+    const queryConditions = validStudents.map((student: any) => ({
       roll_number: student.roll_number,
       sub_code: student.sub_code,
     }));
@@ -21,12 +46,14 @@ export async function POST(req: Request) {
       });
     }
 
-    await AddMAny_St.insertMany(data);
+
+    await AddMAny_St.insertMany(validStudents);
 
     return Response.json({
       success: true,
       message: "Students added successfully",
     });
+
   } catch (error) {
     console.error("Error while adding students:", error);
     return new Response(
